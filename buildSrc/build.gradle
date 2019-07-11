@@ -1,0 +1,35 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+dependencies {
+    //gradle sdk
+    implementation gradleApi()
+    //groovy sdk
+    implementation localGroovy()
+
+    implementation 'com.android.tools.build:gradle:3.1.2'
+}
+
+repositories {
+    jcenter()
+    google()
+}
+
+
+uploadArchives {
+    configuration = configurations.archives
+    repositories {
+        mavenDeployer {
+            repository(url: 'http://app.mvn-int.igetcool.com/repository/igetcool/') {
+                authentication(userName: 'igetcool_pub', password: '123456')
+            }
+            pom.project {
+                version '0.0.1'
+                packaging 'jar'
+                artifactId 'register'
+                groupId 'com.igetcool.register'
+                description 'app register'
+            }
+        }
+    }
+}
